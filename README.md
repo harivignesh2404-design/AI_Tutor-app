@@ -184,3 +184,4 @@ After changing the deployed URL, run `npx cap sync android` again (or `CAPACITOR
 
 MIT
 "# AI_Tutor-app" 
+"# AI_Tutor-app" 
