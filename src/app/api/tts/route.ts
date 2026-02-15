@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSession, isPremium } from "@/lib/auth";
 import { openai } from "@/lib/openai";
 
+export const dynamic = "force-dynamic";
+
 // Free: alloy (simpler). Premium: nova (higher quality).
 const VOICE_FREE = "alloy";
 const VOICE_PREMIUM = "nova";

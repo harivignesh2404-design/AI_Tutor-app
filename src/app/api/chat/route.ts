@@ -4,6 +4,8 @@ import { prisma } from "@/lib/db";
 import { openai } from "@/lib/openai";
 import { retrieveRelevantChunks } from "@/lib/rag";
 
+export const dynamic = "force-dynamic";
+
 const SYSTEM_FREE = `You are a helpful AI teacher. Answer based ONLY on the provided notes. Keep answers concise and clear. Do not add external references or YouTube links.`;
 
 const SYSTEM_PREMIUM = `You are a premium AI teacher. Answer based on the provided notes. For premium users you should:

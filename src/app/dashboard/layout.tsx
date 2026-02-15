@@ -4,6 +4,8 @@ import Link from "next/link";
 import { BookOpen, Crown } from "lucide-react";
 import { LogoutButton } from "@/components/LogoutButton";
 
+export const dynamic = "force-dynamic";
+
 export default async function DashboardLayout({
   children,
 }: {

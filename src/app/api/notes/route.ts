@@ -4,6 +4,8 @@ import { prisma } from "@/lib/db";
 import { indexNote } from "@/lib/rag";
 import { openai } from "@/lib/openai";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   const session = await getSession();
   if (!session)

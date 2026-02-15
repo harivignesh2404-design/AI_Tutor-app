@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSession, isPremium } from "@/lib/auth";
 
+export const dynamic = "force-dynamic";
+
 // Premium-only: return a YouTube search URL for the given query.
 export async function GET(req: NextRequest) {
   const session = await getSession();
