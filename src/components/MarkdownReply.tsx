@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import type { ReactNode } from "react";
 import mermaid from "mermaid";
 
 // Simple markdown-like rendering: paragraphs, code blocks (including mermaid), bold, lists, links.
 // Strips [YouTube: ...] for display (link is shown as button in ChatPanel).
-function renderChunks(content: string): React.ReactNode[] {
-  const parts: React.ReactNode[] = [];
+function renderChunks(content: string): ReactNode[] {
+  const parts: ReactNode[] = [];
   let rest = content.replace(/\[YouTube:\s*[^\]]+\]/g, "").trim();
   const codeBlockRegex = /```(\w+)?\s*([\s\S]*?)```/g;
   let lastIndex = 0;
@@ -34,9 +35,9 @@ function renderChunks(content: string): React.ReactNode[] {
   return parts;
 }
 
-function paragraphsToNodes(text: string): React.ReactNode {
+function paragraphsToNodes(text: string): ReactNode {
   const lines = text.split(/\n/);
-  const nodes: React.ReactNode[] = [];
+  const nodes: ReactNode[] = [];
   let i = 0;
   while (i < lines.length) {
     const line = lines[i];
@@ -69,7 +70,7 @@ function paragraphsToNodes(text: string): React.ReactNode {
   return <>{nodes}</>;
 }
 
-function inlineFormat(str: string): React.ReactNode {
+function inlineFormat(str: string): ReactNode {
   const parts: (string | JSX.Element)[] = [];
   let s = str;
   const strongRegex = /\*\*([^*]+)\*\*/g;
@@ -81,7 +82,7 @@ function inlineFormat(str: string): React.ReactNode {
     lastIndex = m.index + m[0].length;
   }
   if (lastIndex < s.length) parts.push(s.slice(lastIndex));
-  const withLinks: React.ReactNode[] = [];
+  const withLinks: ReactNode[] = [];
   parts.forEach((p) => {
     if (typeof p !== "string") {
       withLinks.push(p);

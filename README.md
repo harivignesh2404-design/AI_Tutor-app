@@ -13,7 +13,7 @@ A personalised AI teacher that **trains on your notes** and helps you learn with
 ## Tech stack
 
 - **Next.js 14** (App Router), **TypeScript**, **Tailwind CSS**
-- **Prisma** + **SQLite** (users, notes, message history)
+- **Prisma** + **PostgreSQL** (Neon; users, notes, message history)
 - **OpenAI**: embeddings (RAG), chat (GPT-4o-mini), TTS
 
 ## Setup
@@ -29,9 +29,9 @@ A personalised AI teacher that **trains on your notes** and helps you learn with
 
    Copy `.env.example` to `.env` and set:
 
-   - `DATABASE_URL="file:./dev.db"`
-   - `JWT_SECRET` — any long random string
-   - `OPENAI_API_KEY` — your OpenAI API key (required for chat, embeddings, TTS)
+   - `DATABASE_URL` — your Neon PostgreSQL URL (from [neon.tech](https://neon.tech) dashboard)
+   - `JWT_SECRET` — a long random string (e.g. run `openssl rand -base64 32` to generate)
+   - `OPENAI_API_KEY` — your OpenAI API key from [platform.openai.com/api-keys](https://platform.openai.com/api-keys) (required for chat, embeddings, TTS)
 
 3. **Database**
 
@@ -47,6 +47,19 @@ A personalised AI teacher that **trains on your notes** and helps you learn with
    ```
 
    Open [http://localhost:3000](http://localhost:3000).
+
+### Setting env vars on Vercel (for deployment)
+
+1. In **Vercel** → your project → **Settings** → **Environment Variables**.
+2. Add these for **Production** (and optionally Preview):
+
+   | Name             | Value                                                                 | Notes                                      |
+   |------------------|-----------------------------------------------------------------------|--------------------------------------------|
+   | `DATABASE_URL`   | `postgresql://...` from Neon dashboard                                | Neon → your project → Connection string   |
+   | `JWT_SECRET`     | Any long random string (e.g. 32+ characters)                          | Keep secret; e.g. `openssl rand -base64 32` |
+   | `OPENAI_API_KEY` | `sk-...` from [OpenAI API keys](https://platform.openai.com/api-keys) | Required for chat, embeddings, voice      |
+
+3. **Redeploy** the project so the new variables are used.
 
 ## Usage
 

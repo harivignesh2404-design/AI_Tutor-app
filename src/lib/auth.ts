@@ -48,20 +48,25 @@ export async function getPayloadFromToken(token: string): Promise<JWTPayload | n
 }
 
 export async function getSession(): Promise<{ user: { id: string; email: string; tier: UserTier }; payload: JWTPayload } | null> {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("auth")?.value;
-  if (!token) return null;
-  const payload = await getPayloadFromToken(token);
-  if (!payload?.sub) return null;
-  const user = await prisma.user.findUnique({
-    where: { id: payload.sub },
-    select: { id: true, email: true, tier: true },
-  });
-  if (!user) return null;
-  return {
-    user: { id: user.id, email: user.email, tier: user.tier as UserTier },
-    payload,
-  };
+  try {
+    const cookieStore = await cookies();
+    const token = cookieStore.get("auth")?.value;
+    if (!token) return null;
+    const payload = await getPayloadFromToken(token);
+    if (!payload?.sub) return null;
+    const user = await prisma.user.findUnique({
+      where: { id: payload.sub },
+      select: { id: true, email: true, tier: true },
+    });
+    if (!user) return null;
+    return {
+      user: { id: user.id, email: user.email, tier: user.tier as UserTier },
+      payload,
+    };
+  } catch {
+    // Build time or no request context (e.g. Vercel build) — return null
+    return null;
+  }
 }
 
 export function isPremium(tier: string): boolean {

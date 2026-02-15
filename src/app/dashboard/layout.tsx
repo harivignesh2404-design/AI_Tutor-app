@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { unstable_noStore } from "next/cache";
 import { getSession } from "@/lib/auth";
 import Link from "next/link";
 import { BookOpen, Crown } from "lucide-react";
@@ -11,8 +12,18 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
+  unstable_noStore(); // Ensure this segment is never statically generated
   const session = await getSession();
-  if (!session) redirect("/login");
+
+  // Don't call redirect() here — it throws and breaks Vercel build. Middleware redirects unauthenticated users.
+  if (!session) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4 bg-[#faf8f2]">
+        <p className="text-ink-600">Not signed in.</p>
+        <Link href="/login" className="text-sage-600 font-medium hover:underline">Go to login</Link>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-[#faf8f2]">
