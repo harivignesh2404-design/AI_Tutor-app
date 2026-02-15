@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink: 30 25 20;
+  --sage: 50 80 60;
+  --paper: 250 248 242;
+  --accent: 80 120 90;
+}
+
+body {
+  color: rgb(var(--ink));
+  background: rgb(var(--paper));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Simple markdown-style in chat */
+.chat-content pre {
+  @apply rounded-lg bg-ink-100 p-4 overflow-x-auto text-sm my-2;
+}
+.chat-content code {
+  @apply bg-ink-100 px-1.5 py-0.5 rounded text-sm font-mono;
+}
+.chat-content pre code {
+  @apply bg-transparent p-0;
+}
+.chat-content p {
+  @apply my-2;
+}
+.chat-content ul, .chat-content ol {
+  @apply my-2 pl-6;
+}
+.chat-content li {
+  @apply my-0.5;
+}
+.chat-content strong {
+  @apply font-semibold;
+}
+.chat-content a {
+  @apply text-sage-600 underline hover:text-sage-700;
+}
+
+.mermaid {
+  @apply flex justify-center my-4;
+}
