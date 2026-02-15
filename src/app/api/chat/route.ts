@@ -34,7 +34,8 @@ export async function POST(req: NextRequest) {
       : "No relevant notes found. Say you don't have enough context from their notes and suggest they add more notes.";
 
     const systemContent = isPremium(session.user.tier) ? SYSTEM_PREMIUM : SYSTEM_FREE;
-    const messages: OpenAI.Chat.ChatCompletionMessageParam[] = [
+    // Inline type to avoid OpenAI namespace (build-safe)
+    const messages: Array<{ role: "system" | "user"; content: string }> = [
       { role: "system", content: systemContent + "\n\n" + context },
       { role: "user", content: message },
     ];
